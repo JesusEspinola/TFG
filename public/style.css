@@ -1,0 +1,30 @@
+body {
+    background: lightgrey;
+    margin: 3%;
+}
+
+header, aside, footer, canvas {
+    border: 2px solid black;
+    padding: 3%;
+}
+
+aside {
+    width: 15%;
+}
+
+#main {
+    min-height: 50%;
+}
+
+#canvasArea {
+    position: absolute;
+    width: 48%;
+}
+
+#leftSide {
+    float: left;
+}
+
+#rightSide {
+    float: right;
+}
