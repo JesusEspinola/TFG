@@ -1,4 +1,4 @@
-import { ArcRotateCamera, Engine, HemisphericLight, Mesh, MeshBuilder, Scene, Vector3 } from "@babylonjs/core";
+import { ArcRotateCamera, Engine, GroundMesh, HemisphericLight, MeshBuilder, Scene, Vector3 } from "@babylonjs/core";
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
@@ -30,7 +30,16 @@ class App {
         this._camera.attachControl(this._canvas, true);
 
         const light: HemisphericLight = new HemisphericLight("light1", new Vector3(0, 10, 0), this._scene);
-        const sphere: Mesh = MeshBuilder.CreateSphere("sphere", { diameter: 1 }, this._scene);
+        const ground: GroundMesh = MeshBuilder.CreateGroundFromHeightMap(
+            "ground",
+            "https://doc.babylonjs.com/img/how_to/HeightMap/heightMap.png",
+            {
+                width: 1,
+                height: 1,
+                subdivisions: 10
+            },
+            this._scene
+        );
 
         // hide/show the Inspector
         window.addEventListener("keydown", (ev) => {
