@@ -34,9 +34,9 @@ class App {
             "ground",
             "https://doc.babylonjs.com/img/how_to/HeightMap/heightMap.png",
             {
-                width: 1,
-                height: 1,
-                subdivisions: 10
+                width: 10,
+                height: 10,
+                subdivisions: 100
             },
             this._scene
         );
