@@ -49,13 +49,19 @@ class App {
 			{
 				width: 10,
 				height: 10,
-				subdivisions: 100
+				subdivisions: 100,
+				minHeight: 0,
+				maxHeight: 2.5,
+				onReady: (() => {
+					const trunkHeight: number = 0.5,
+						topDiameter: number = 0.3,
+						tree: Tree = new Tree(trunkHeight, topDiameter);
+
+					tree.position.y = ground.getHeightAtCoordinates(tree.position.x, tree.position.z) + (trunkHeight / 2);
+				})
 			},
 			this._scene
 		);
-
-		const tree: Tree = new Tree(1, 1);
-		tree.position.y = ground.getHeightAtCoordinates(tree.position.x, tree.position.z);
 
 		// hide/show the Inspector
 		window.addEventListener("keydown", (ev) => {
