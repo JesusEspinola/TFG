@@ -1,12 +1,11 @@
-import { Color3, Mesh, MeshBuilder, StandardMaterial } from "@babylonjs/core";
+import { Color3, Mesh, MeshBuilder, StandardMaterial, Vector3 } from "@babylonjs/core";
 
 export class Tree {
 	private _trunk: Mesh;
 	private _top: Mesh;
 	private _trunkMaterial: StandardMaterial;
 	private _topMaterial: StandardMaterial;
-
-	public mesh: Mesh;
+	private _mesh: Mesh;
 
 	constructor(trunkHeight: number, topDiameter: number) {
 		this._trunk = MeshBuilder.CreateCylinder("trunk", {
@@ -25,6 +24,6 @@ export class Tree {
 
 		this._top.position.y += trunkHeight / 3;
 
-		this.mesh = Mesh.MergeMeshes([this._trunk, this._top], true, true, undefined, false, true);
+		this._mesh = Mesh.MergeMeshes([this._trunk, this._top], true, true, undefined, false, true);
 	}
 }
