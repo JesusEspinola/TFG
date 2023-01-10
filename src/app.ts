@@ -10,6 +10,7 @@ import {
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
+import { Tree } from "./tree";
 
 class App {
 	private _canvas: HTMLCanvasElement;
@@ -52,6 +53,9 @@ class App {
 			},
 			this._scene
 		);
+
+		const tree: Tree = new Tree(1, 1);
+		tree.position.y = ground.getHeightAtCoordinates(tree.position.x, tree.position.z);
 
 		// hide/show the Inspector
 		window.addEventListener("keydown", (ev) => {
