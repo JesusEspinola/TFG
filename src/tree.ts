@@ -26,4 +26,8 @@ export class Tree {
 
 		this._mesh = Mesh.MergeMeshes([this._trunk, this._top], true, true, undefined, false, true);
 	}
+
+	public get position(): Vector3 {
+		return this._mesh.position;
+	}
 }
