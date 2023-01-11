@@ -16,27 +16,11 @@ class App {
 	private _canvas: HTMLCanvasElement;
 	private _engine: Engine;
 	private _scene: Scene;
-
 	private _camera: ArcRotateCamera;
-
-	private _initialiseApp(): void {
-		// create the canvas html element and attach it to the webpage
-		this._canvas = document.createElement("canvas");
-		this._canvas.id = "canvasArea";
-
-		const div: HTMLElement = document.getElementById("main");
-		div.appendChild(this._canvas);
-
-		// initialize babylon engine and scene
-		this._engine = new Engine(this._canvas, true);
-		this._scene = new Scene(this._engine);
-	}
 
 	constructor() {
 		this._initialiseApp();
-
-		this._camera = new ArcRotateCamera("Camera", 0, 0, 2, Vector3.Zero(), this._scene);
-		this._camera.attachControl(this._canvas, true);
+		this._setUpCamera();
 
 		const light: HemisphericLight = new HemisphericLight(
 			"light1",
@@ -79,6 +63,28 @@ class App {
 		this._engine.runRenderLoop(() => {
 			this._scene.render();
 		});
+	}
+
+	private _initialiseApp(): void {
+		// create the canvas html element and attach it to the webpage
+		this._canvas = document.createElement("canvas");
+		this._canvas.id = "canvasArea";
+
+		const div: HTMLElement = document.getElementById("main");
+		div.appendChild(this._canvas);
+
+		// initialize babylon engine and scene
+		this._engine = new Engine(this._canvas, true);
+		this._scene = new Scene(this._engine);
+	}
+
+	private _setUpCamera(): void {
+		this._camera = new ArcRotateCamera("Camera", 0, 0.8, 10, Vector3.Zero(), this._scene);
+		this._camera.lowerBetaLimit = 0.1;
+		this._camera.upperBetaLimit = (Math.PI / 2) * 0.9;
+		this._camera.lowerRadiusLimit = 5;
+		this._camera.upperRadiusLimit = 100;
+		this._camera.attachControl(this._canvas, true);
 	}
 }
 new App();
