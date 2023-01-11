@@ -10,6 +10,7 @@ import {
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
+import { GroundProperties } from "./ground";
 import { Tree, TreeProperties } from "./tree";
 import { getRandomArbitrary } from "./utils";
 
@@ -35,22 +36,31 @@ class App {
 				trunkHeight: 0.5,
 				topDiameter: 0.3
 			};
-			
+
+		const groundProperties: GroundProperties = {
+			width: 10,
+			height: 10,
+			subdivisions: 100,
+			minHeight: 0,
+			maxHeight: 2.5
+		};
+
 		const ground: GroundMesh = MeshBuilder.CreateGroundFromHeightMap(
 			"ground",
 			"https://doc.babylonjs.com/img/how_to/HeightMap/heightMap.png",
 			{
-				width: 10,
-				height: 10,
-				subdivisions: 100,
-				minHeight: 0,
-				maxHeight: 2.5,
+				...groundProperties,
 				onReady: () => {
 					for (let i: number = 0; i < numberOfTrees; i++) {
 						const tree: Tree = new Tree(treeProperties);
 
-						tree.position.x = getRandomArbitrary(-4.5, 4.5);
-						tree.position.z = getRandomArbitrary(-4.5, 4.5);
+						const minX: number = -(groundProperties.width / 2) + groundProperties.width / 20,
+							maxX: number = groundProperties.width / 2 - groundProperties.width / 20,
+							minZ: number = -(groundProperties.height / 2) + groundProperties.height / 20,
+							maxZ: number = groundProperties.height / 2 - groundProperties.height / 20;
+
+						tree.position.x = getRandomArbitrary(minX, maxX);
+						tree.position.z = getRandomArbitrary(minZ, maxZ);
 
 						tree.position.y =
 							ground.getHeightAtCoordinates(tree.position.x, tree.position.z) +
