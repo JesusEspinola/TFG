@@ -10,7 +10,8 @@ import {
 import "@babylonjs/core/Debug/debugLayer";
 import "@babylonjs/inspector";
 import "@babylonjs/loaders/glTF";
-import { Tree } from "./tree";
+import { Tree, TreeProperties } from "./tree";
+import { getRandomArbitrary } from "./utils";
 
 class App {
 	private _canvas: HTMLCanvasElement;
@@ -27,6 +28,14 @@ class App {
 			new Vector3(0, 10, 0),
 			this._scene
 		);
+
+		const treeArray: Tree[] = [],
+			numberOfTrees: number = 15,
+			treeProperties: TreeProperties = {
+				trunkHeight: 0.5,
+				topDiameter: 0.3
+			};
+			
 		const ground: GroundMesh = MeshBuilder.CreateGroundFromHeightMap(
 			"ground",
 			"https://doc.babylonjs.com/img/how_to/HeightMap/heightMap.png",
@@ -36,13 +45,20 @@ class App {
 				subdivisions: 100,
 				minHeight: 0,
 				maxHeight: 2.5,
-				onReady: (() => {
-					const trunkHeight: number = 0.5,
-						topDiameter: number = 0.3,
-						tree: Tree = new Tree(trunkHeight, topDiameter);
+				onReady: () => {
+					for (let i: number = 0; i < numberOfTrees; i++) {
+						const tree: Tree = new Tree(treeProperties);
 
-					tree.position.y = ground.getHeightAtCoordinates(tree.position.x, tree.position.z) + (trunkHeight / 2);
-				})
+						tree.position.x = getRandomArbitrary(-4.5, 4.5);
+						tree.position.z = getRandomArbitrary(-4.5, 4.5);
+
+						tree.position.y =
+							ground.getHeightAtCoordinates(tree.position.x, tree.position.z) +
+							treeProperties.trunkHeight / 2;
+
+						treeArray.push(tree);
+					}
+				}
 			},
 			this._scene
 		);
